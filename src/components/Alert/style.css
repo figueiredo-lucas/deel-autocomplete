@@ -1,0 +1,32 @@
+.alert {
+  position: fixed;
+  box-sizing: border-box;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 400px;
+  max-width: calc(100vh - 4rem);
+  line-height: 1rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  padding: .75rem 2rem .75rem 1rem;
+  border: 1px solid rgb(255 225 150);
+  background-color: rgb(255 244 197);
+  text-align: center;
+}
+
+.alert button {
+  border: none;
+  background-color: transparent;
+  font-size: 24px;
+  color: #c4c4c4;
+  cursor: pointer;
+  padding: 0;
+  position: absolute;
+  right: .5rem;
+  top: calc(50% - 12px);
+}
+
+.alert button:hover {
+  color: black;
+}

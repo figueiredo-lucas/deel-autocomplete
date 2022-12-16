@@ -1,29 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { hashCode } from '../../../utils';
 
 type AutocompleteListProps = {
   textMatch: string;
+  list: string[];
   onSelect: (text: string) => void;
   maxResults?: number;
 }
 
-const TEST_LIST = ['Terry Medhurst', 'Sheldon Quigley', 'Terrill Hills', 'Miles Cummerata', 'Mavis Schultz', 'Alison Reichert', 'Oleta Abbott', 'Ewell Mueller', 'Demetrius Corkery', 'Eleanora Price', 'Marcel Jones', 'Assunta Rath', 'Trace Douglas', 'Enoch Lynch', 'Jeanne Halvorson', 'Trycia Fadel', 'Bradford Prohaska', 'Arely Skiles', 'Gust Purdy', 'Lenna Renner', 'Doyle Ernser', 'Tressa Weber', "Felicity O'Reilly", 'Jocelyn Schuster', 'Edwina Ernser', 'Griffin Braun', 'Piper Schowalter', 'Kody Terry', 'Macy Greenfelder', 'Maurine Stracke', 'Luciano Sauer', 'Kaya Emard', 'Lee Schmidt', 'Darien Witting', 'Jacklyn Schimmel', 'Angelica Baumbach', 'Delfina Ziemann', 'Thaddeus McCullough', 'Salvatore Fisher', 'Jasmin Hermiston', 'Nicklaus Cruickshank', 'Tiara Rolfson', 'Garret Klocko', 'Reginald Wisoky', 'Humberto Botsford', 'Justus Sipes', 'Coralie Boyle', 'Felicita Gibson', 'Pearl Blick', 'Johnathon Predovic'].sort((a, b) => a.localeCompare(b));
-
-const AutocompleteList = ({ textMatch, onSelect, maxResults }: AutocompleteListProps) => {
-
-  const [list, setList] = useState<string[]>(TEST_LIST);
-
-  useEffect(() => {
-    // should add a throttle
-    if (textMatch) {
-      setList(filterList(textMatch));
-    } else {
-      setList([]);
-    }
-  }, [textMatch]);
-
-  const filterList = (textMatch: string): string[] =>
-    TEST_LIST.filter(value => value.toLocaleLowerCase().includes(textMatch.toLocaleLowerCase()))
+const AutocompleteList = ({ textMatch, list, onSelect, maxResults }: AutocompleteListProps) => {
 
   const highlightOnMatch = (text: string) => {
 
@@ -33,8 +18,8 @@ const AutocompleteList = ({ textMatch, onSelect, maxResults }: AutocompleteListP
 
     // I've left 2 solutions for this case.
     // Using the above one because I wont need to handle keys for the array built on the latter.
-    // Could do some talking on which is better and easier to maintain. IMHO, first one is easier to maintain and read
-
+    // Could do some talking on which is better and easier to maintain.
+    // IMHO, first one is easier to maintain and read at the cost of using the dangerouslySetInnerHTML
 
     // if (!textMatch) return text;
     // const matchLen = textMatch.length;

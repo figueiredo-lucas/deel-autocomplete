@@ -1,13 +1,35 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import AutocompleteList from './AutocompleteList';
 import './style.css';
 
 type AutocompleteProps = {
   label: string;
+  getFilteredList: (textMatch: string) => Promise<string[]>
 }
 
-const Autocomplete = ({ label }: AutocompleteProps) => {
+const Autocomplete = ({ label, getFilteredList }: AutocompleteProps) => {
   const [text, setText] = useState('');
+  const [list, setList] = useState<string[]>([]);
+
+  useEffect(() => {
+    const filter = async () => {
+      try {
+        if (text) {
+          const data = await getFilteredList(text);
+          setList(data);
+        } else {
+          setList([]);
+        }
+      } catch (err) {
+        // would need to show this error (or a more user friendly one) somewhere informing the user that the filtering didnt work
+        console.log(err);
+        setList([]);
+      }
+    }
+
+    // should add a debounce so it doesnt trigger every keystroke
+    filter();
+  }, [text]);
 
   return (
     <div className="autocomplete">
@@ -17,7 +39,7 @@ const Autocomplete = ({ label }: AutocompleteProps) => {
         type="text"
         value={text}
         onChange={(evt: ChangeEvent<HTMLInputElement>) => setText(evt.target.value)} />
-      <AutocompleteList textMatch={text} onSelect={setText} maxResults={20} />
+      <AutocompleteList textMatch={text} list={list} onSelect={setText} maxResults={20} />
     </div>
   )
 }
