@@ -1,0 +1,2 @@
+// simplest hashCode as possible to use as key for the properties. Its not fail proof because texts can sum the same, but i feel its enough for the exercise.
+export const hashCode = (text: string) => Array.from(text).reduce((acc, curr) => acc + curr.charCodeAt(0), 0);
